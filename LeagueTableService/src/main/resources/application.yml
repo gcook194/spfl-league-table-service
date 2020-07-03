@@ -1,0 +1,10 @@
+---
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/spfl
+    username: root
+    password: root
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL57Dialect
+  profiles:    active:    - default 
+  cloud:    config:      uri:      - http://localhost:8086/config
