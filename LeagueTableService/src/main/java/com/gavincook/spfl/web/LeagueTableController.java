@@ -40,4 +40,68 @@ public class LeagueTableController {
 		
 		return ResponseEntity.ok().body(response);
 	}
+	
+	@GetMapping("/{leagueId}/top-scoring-teams")
+	public ResponseEntity<LeagueTableResponse> getTopScoringTeamsTable(@PathVariable Long leagueId) {
+		
+		LeagueTableResponse response = new LeagueTableResponse();
+		
+		// build the table
+		List<Fixture> fixtures = leagueTableMgr.getFixturesByStatusAndLeagueResourceId("FT", leagueId).getFixtures();
+		LeagueTable LeagueTable = leagueTableMgr.buildLeagueTable(fixtures);
+		LeagueTable topScoringTeamsTable = leagueTableMgr.buildTopScoringTeamsTable(LeagueTable);
+		
+		response.setLeagueTables(Arrays.asList(topScoringTeamsTable));
+		response.setResults(response.getLeagueTables().size());
+		
+		return ResponseEntity.ok().body(response);
+	}
+	
+	@GetMapping("/{leagueId}/top-defensive-teams")
+	public ResponseEntity<LeagueTableResponse> getTopDefensiveTeamsTable(@PathVariable Long leagueId) {
+		
+		LeagueTableResponse response = new LeagueTableResponse();
+		
+		// build the table
+		List<Fixture> fixtures = leagueTableMgr.getFixturesByStatusAndLeagueResourceId("FT", leagueId).getFixtures();
+		LeagueTable LeagueTable = leagueTableMgr.buildLeagueTable(fixtures);
+		LeagueTable topScoringTeamsTable = leagueTableMgr.buildTopDefensiveTeamsTable(LeagueTable);
+		
+		response.setLeagueTables(Arrays.asList(topScoringTeamsTable));
+		response.setResults(response.getLeagueTables().size());
+		
+		return ResponseEntity.ok().body(response);
+	}
+	
+	@GetMapping("/{leagueId}/goals-scored-per-game")
+	public ResponseEntity<LeagueTableResponse> getTopScorersPerGameTable(@PathVariable Long leagueId) {
+		
+		LeagueTableResponse response = new LeagueTableResponse();
+		
+		// build the table
+		List<Fixture> fixtures = leagueTableMgr.getFixturesByStatusAndLeagueResourceId("FT", leagueId).getFixtures();
+		LeagueTable LeagueTable = leagueTableMgr.buildLeagueTable(fixtures);
+		LeagueTable topScoringTeamsTable = leagueTableMgr.buildTopScorersPerGameTable(LeagueTable);
+		
+		response.setLeagueTables(Arrays.asList(topScoringTeamsTable));
+		response.setResults(response.getLeagueTables().size());
+		
+		return ResponseEntity.ok().body(response);
+	}
+	
+	@GetMapping("/{leagueId}/goals-conceded-per-game")
+	public ResponseEntity<LeagueTableResponse> getTopDefendersPerGameTable(@PathVariable Long leagueId) {
+		
+		LeagueTableResponse response = new LeagueTableResponse();
+		
+		// build the table
+		List<Fixture> fixtures = leagueTableMgr.getFixturesByStatusAndLeagueResourceId("FT", leagueId).getFixtures();
+		LeagueTable LeagueTable = leagueTableMgr.buildLeagueTable(fixtures);
+		LeagueTable topScoringTeamsTable = leagueTableMgr.buildTopDefencePerGameTable(LeagueTable);
+		
+		response.setLeagueTables(Arrays.asList(topScoringTeamsTable));
+		response.setResults(response.getLeagueTables().size());
+		
+		return ResponseEntity.ok().body(response);
+	}
 }

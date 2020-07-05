@@ -100,13 +100,64 @@ public class LeagueTableManagerImpl implements LeagueTableManager {
 			}
 			
 			entry.setForm(form);
+			
+			/*
+			 * Determine aggregated data for each entry: 
+			 * - points per game 
+			 * - goals scored per game 
+			 * - goals conceded per game
+			 * - goal difference per game 
+			 */
+			this.calculatePointsPerGame(entry);
+			this.calculateGoalsScoredPerGame(entry);
+			this.calculateGoalsConcededPerGame(entry);
+			this.calculateGoalDifferencePerGame(entry);
+			
 			table.addEntry(entry);
-			Collections.sort(table.getEntries(), Collections.reverseOrder());
 		}
+		
+		// default sort can be overriden through other methods
+		Collections.sort(table.getEntries(), Collections.reverseOrder());
 		
 		return table;
 	}
 	
+	/**
+	 * calculates goal difference per game for a League Table Entry
+	 * @param entry
+	 */
+	private void calculateGoalDifferencePerGame(LeagueTableEntry entry) {
+		float goalDifferencePerGame = (float) entry.getGoalDifference() / entry.getMatchesPlayed();
+		entry.setGoalDifferencePerGame(goalDifferencePerGame);
+	}
+
+	/**
+	 * calculates goals conceded per game for a League Table Entry
+	 * @param entry
+	 */
+	private void calculateGoalsConcededPerGame(LeagueTableEntry entry) {
+		float goalsConcededPerGame = (float) entry.getGoalsConceded() / entry.getMatchesPlayed();
+		entry.setGoalsConcededPerGame(goalsConcededPerGame);
+	}
+
+	/**
+	 * calculates goals scored per game for a League Table Entry
+	 * @param entry
+	 */
+	private void calculateGoalsScoredPerGame(LeagueTableEntry entry) {
+		float goalsScoredPerGame = (float) entry.getGoalsScored() / entry.getMatchesPlayed();
+		entry.setGoalsScoredPerGame(goalsScoredPerGame);
+	}
+
+	/** 
+	 * calculates points per game for a League Table Entry
+	 * @param entry
+	 */
+	private void calculatePointsPerGame(LeagueTableEntry entry) {
+		float pointsPerGame = (float) entry.getPoints() / entry.getMatchesPlayed(); 
+		entry.setPointsPerGame(pointsPerGame);
+	}
+
 	/**
 	 * adds a win to the entry
 	 * @param entry
@@ -173,6 +224,42 @@ public class LeagueTableManagerImpl implements LeagueTableManager {
 		}
 		
 		return teams;
+	}
+
+	@Override
+	public LeagueTable buildTopScoringTeamsTable(LeagueTable leagueTable) {
+		
+		Collections.sort(leagueTable.getEntries(), (LeagueTableEntry entry1, LeagueTableEntry entry2) 
+				-> entry2.getGoalsScored() - entry1.getGoalsScored());		
+				
+		return leagueTable;
+	}
+
+	@Override
+	public LeagueTable buildTopDefensiveTeamsTable(LeagueTable leagueTable) {
+		
+		Collections.sort(leagueTable.getEntries(), (LeagueTableEntry entry1, LeagueTableEntry entry2) 
+				-> entry1.getGoalsConceded() - entry2.getGoalsConceded());		
+				
+		return leagueTable;
+	}
+
+	@Override
+	public LeagueTable buildTopScorersPerGameTable(LeagueTable leagueTable) {
+		
+		Collections.sort(leagueTable.getEntries(), (LeagueTableEntry entry1, LeagueTableEntry entry2) 
+				-> Float.compare(entry2.getGoalsScoredPerGame(), entry1.getGoalsScoredPerGame()));		
+				
+		return leagueTable;
+	}
+
+	@Override
+	public LeagueTable buildTopDefencePerGameTable(LeagueTable leagueTable) {
+		
+		Collections.sort(leagueTable.getEntries(), (LeagueTableEntry entry1, LeagueTableEntry entry2) 
+				-> Float.compare(entry1.getGoalsConcededPerGame(), entry2.getGoalsConcededPerGame()));		
+				
+		return leagueTable;
 	}
 
 }

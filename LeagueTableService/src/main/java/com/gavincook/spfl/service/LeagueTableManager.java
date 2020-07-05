@@ -24,5 +24,31 @@ public interface LeagueTableManager {
 	 * @return
 	 */
 	LeagueTable buildLeagueTable(List<Fixture> fixtures);
+	
+	/**
+	 * sorts a league table by goals scored descending.
+	 * @return
+	 */
+	LeagueTable buildTopScoringTeamsTable(LeagueTable leagueTable);
+
+	/**
+	 * sorts a league table by goals conceded ascending.
+	 * @return
+	 */
+	LeagueTable buildTopDefensiveTeamsTable(LeagueTable leagueTable);
+
+	/**
+	 * sorts a league table by goals scored divided by fixtures played
+	 * @param leagueTable
+	 * @return
+	 */
+	LeagueTable buildTopScorersPerGameTable(LeagueTable leagueTable);
+
+	/**
+	 * sorts a league table by goals conceded divided by fixtures played
+	 * @param leagueTable
+	 * @return
+	 */
+	LeagueTable buildTopDefencePerGameTable(LeagueTable leagueTable);
 
 }
