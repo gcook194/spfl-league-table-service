@@ -171,7 +171,7 @@ public class LeagueTableManagerImpl implements LeagueTableManager {
 	 * adds a draw to the entry
 	 * @param entry
 	 */
-	public void addDraw(LeagueTableEntry entry) {
+	private void addDraw(LeagueTableEntry entry) {
 		entry.setDraws(entry.getDraws() + 1);
 		entry.setPoints(entry.getPoints() +1);
 	}
@@ -258,6 +258,24 @@ public class LeagueTableManagerImpl implements LeagueTableManager {
 		
 		Collections.sort(leagueTable.getEntries(), (LeagueTableEntry entry1, LeagueTableEntry entry2) 
 				-> Float.compare(entry1.getGoalsConcededPerGame(), entry2.getGoalsConcededPerGame()));		
+				
+		return leagueTable;
+	}
+
+	@Override
+	public LeagueTable buildTopGaolDifferenceTable(LeagueTable leagueTable) {
+		
+		Collections.sort(leagueTable.getEntries(), (LeagueTableEntry entry1, LeagueTableEntry entry2) 
+				-> Float.compare(entry2.getGoalDifference(), entry1.getGoalDifference()));		
+				
+		return leagueTable;
+	}
+
+	@Override
+	public LeagueTable buildTopGaolDifferencePerGameTable(LeagueTable leagueTable) {
+		
+		Collections.sort(leagueTable.getEntries(), (LeagueTableEntry entry1, LeagueTableEntry entry2) 
+				-> Float.compare(entry2.getGoalDifferencePerGame(), entry1.getGoalDifferencePerGame()));		
 				
 		return leagueTable;
 	}

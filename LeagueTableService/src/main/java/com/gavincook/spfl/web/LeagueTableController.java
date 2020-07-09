@@ -104,4 +104,36 @@ public class LeagueTableController {
 		
 		return ResponseEntity.ok().body(response);
 	}
+	
+	@GetMapping("/{leagueId}/goal-difference")
+	public ResponseEntity<LeagueTableResponse> getTopGoalDifferenceTable(@PathVariable Long leagueId) {
+		
+		LeagueTableResponse response = new LeagueTableResponse();
+		
+		// build the table
+		List<Fixture> fixtures = leagueTableMgr.getFixturesByStatusAndLeagueResourceId("FT", leagueId).getFixtures();
+		LeagueTable LeagueTable = leagueTableMgr.buildLeagueTable(fixtures);
+		LeagueTable topScoringTeamsTable = leagueTableMgr.buildTopGaolDifferenceTable(LeagueTable);
+		
+		response.setLeagueTables(Arrays.asList(topScoringTeamsTable));
+		response.setResults(response.getLeagueTables().size());
+		
+		return ResponseEntity.ok().body(response);
+	}
+	
+	@GetMapping("/{leagueId}/goal-difference-per-game")
+	public ResponseEntity<LeagueTableResponse> getTopGoalDifferencePerGameTable(@PathVariable Long leagueId) {
+		
+		LeagueTableResponse response = new LeagueTableResponse();
+		
+		// build the table
+		List<Fixture> fixtures = leagueTableMgr.getFixturesByStatusAndLeagueResourceId("FT", leagueId).getFixtures();
+		LeagueTable LeagueTable = leagueTableMgr.buildLeagueTable(fixtures);
+		LeagueTable topScoringTeamsTable = leagueTableMgr.buildTopGaolDifferencePerGameTable(LeagueTable);
+		
+		response.setLeagueTables(Arrays.asList(topScoringTeamsTable));
+		response.setResults(response.getLeagueTables().size());
+		
+		return ResponseEntity.ok().body(response);
+	}
 }

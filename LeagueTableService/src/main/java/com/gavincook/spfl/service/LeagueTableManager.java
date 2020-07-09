@@ -51,4 +51,18 @@ public interface LeagueTableManager {
 	 */
 	LeagueTable buildTopDefencePerGameTable(LeagueTable leagueTable);
 
+	/**
+	 * sorts a league table by goal difference
+	 * @param leagueTable
+	 * @return
+	 */
+	LeagueTable buildTopGaolDifferenceTable(LeagueTable leagueTable);
+
+	/**
+	 * sorts a league table by goal difference divided by fixtures played descending
+	 * @param leagueTable
+	 * @return
+	 */
+	LeagueTable buildTopGaolDifferencePerGameTable(LeagueTable leagueTable);
+
 }
