@@ -23,7 +23,7 @@ public interface LeagueTableManager {
 	 * @param fixtures
 	 * @return
 	 */
-	LeagueTable buildLeagueTable(List<Fixture> fixtures);
+	LeagueTable buildLeagueTable(List<Fixture> fixtures, int fixtureWeek);
 	
 	/**
 	 * sorts a league table by goals scored descending.
@@ -64,5 +64,13 @@ public interface LeagueTableManager {
 	 * @return
 	 */
 	LeagueTable buildTopGaolDifferencePerGameTable(LeagueTable leagueTable);
+
+	/**
+	 * builds a league table divided by match week
+	 * @param fixtures
+	 * @param teamId
+	 * @return
+	 */
+	List<LeagueTable> buildMatchweekLeagueTable(List<Fixture> fixtures);
 
 }
