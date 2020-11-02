@@ -38,8 +38,13 @@ public class LeagueTableManagerImpl implements LeagueTableManager {
 	@Override
 	public FixtureListResponse getFixturesByStatusAndLeagueResourceId(String status, Long leagueResourceId) {
 		log.info("fetching fixtures for league " + leagueResourceId);
-		return webClient.get().uri(fixtureServiceUrl + "/fixtures/status/" + status + "/league/" + leagueResourceId)
-				.retrieve().toEntity(FixtureListResponse.class).block().getBody();
+		return webClient
+				.get()
+				.uri(fixtureServiceUrl + "/fixtures/status/" + status + "/league/" + leagueResourceId)
+				.retrieve()
+				.toEntity(FixtureListResponse.class)
+				.block()
+				.getBody();
 	}
 
 	@Override
@@ -317,14 +322,12 @@ public class LeagueTableManagerImpl implements LeagueTableManager {
 		int roundNum = 0; 
 		
 		String roundStr = fixture.getRoundStr();
-		
-		if (roundStr.length() >= 17) {
-			try {
-				roundNum = Integer.parseInt(roundStr.substring(17));	
-			} catch (Exception e) {
-				e.printStackTrace();
-			}	
-		}
+
+		try {
+			roundNum = Integer.parseInt(roundStr.substring(roundStr.length()-2));	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 		
 		return roundNum;
 	}
