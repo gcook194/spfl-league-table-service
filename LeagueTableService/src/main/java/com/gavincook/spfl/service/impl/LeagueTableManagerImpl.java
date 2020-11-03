@@ -290,7 +290,8 @@ public class LeagueTableManagerImpl implements LeagueTableManager {
 	@Override
 	public LeagueTable buildTopGaolDifferencePerGameTable(LeagueTable leagueTable) {
 
-		Collections.sort(leagueTable.getEntries(), (LeagueTableEntry entry1, LeagueTableEntry entry2) -> Float
+		Collections.sort(leagueTable.getEntries(), 
+				(LeagueTableEntry entry1, LeagueTableEntry entry2) -> Float
 				.compare(entry2.getGoalDifferencePerGame(), entry1.getGoalDifferencePerGame()));
 
 		return leagueTable;
@@ -306,7 +307,7 @@ public class LeagueTableManagerImpl implements LeagueTableManager {
 
 		for (int i = 0; i < fixtures.size(); i++) {
 			int roundNum = extractRoundAsIntegerFromFixture(fixtures.get(i));
-			matchweekCount = matchweekCount < roundNum? roundNum : matchweekCount;
+			matchweekCount = matchweekCount < roundNum ? roundNum : matchweekCount;
 		}
 		
 		// need to loop round each match week to create one table per match week
@@ -320,11 +321,11 @@ public class LeagueTableManagerImpl implements LeagueTableManager {
 	private int extractRoundAsIntegerFromFixture(Fixture fixture) {
 		
 		int roundNum = 0; 
-		
-		String roundStr = fixture.getRoundStr();
+
+		String[] sections = fixture.getRoundStr().split("-");
 
 		try {
-			roundNum = Integer.parseInt(roundStr.substring(roundStr.length()-2));	
+			roundNum = Integer.parseInt(sections[1].trim());	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
